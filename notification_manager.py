@@ -12,7 +12,7 @@ import logging_config
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
 EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
-TELEGRAM_BOT_TOKEN="6166835545:AAGaQWOXZrZB8LFhfC69vQ4odjfdiwb2r28"
+TELEGRAM_BOT_TOKEN="7239140118:AAFIR0SuwzSWeEMIgArvKxAKcS-EkwkejUY"
 TELEGRAM_CHAT_ID="643930225"
 
 
@@ -136,21 +136,24 @@ class Messenger():
                 "chat_id": TELEGRAM_CHAT_ID,
                 "text": message_text
             }
+
+            #Користувачі
             params_pavlo = {
                 "chat_id": "751066597",
                 "text": message_text
                 # "text": "пішов в дупу Павлик"
             }
 
-            params_pavlo2 = {
+            params_maksim = {
                 "chat_id": "751066597",
                  "text": "повитерай пилисос Павлик"
             }
 
             try:
                 response = requests.get(endpoint, params=params)
+
                 # send pavlo message
-                # requests.get(endpoint, params=params_pavlo)
+                requests.get(endpoint, params=params_pavlo)
                 # requests.get(endpoint, params=params_pavlo2)
 
                 response.raise_for_status()

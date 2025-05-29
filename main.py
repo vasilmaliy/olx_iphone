@@ -90,7 +90,7 @@ def main() -> None:
 
     target_urls = load_target_urls()
     # добавити масив при добвавленні нової силки
-    old_id_masive = [[], [], [], [], []]
+    old_id_masive = [[], [], [], [], [], [], [], [], [], []]
 
     kiev_timezone = pytz.timezone('Europe/Kiev')
 
@@ -106,24 +106,25 @@ def main() -> None:
         # Отримуємо поточний час за київським часом
         current_time = datetime.now(kiev_timezone)
 
-        if current_time.hour == 8 and time_reset_1:
-            time_reset_1 = False
-            time_reset_2 = True
+        # if current_time.hour == 8 and time_reset_1:
+        #     time_reset_1 = False
+        #     time_reset_2 = True
+        #
+        #     old_id_masive = [[], [], [], [], [], [], [], [], [], []]
+        #
+        # # Перевіряємо, чи поточний час дорівнює 17:00 або 8:00
+        # if current_time.hour == 17 and time_reset_2:
+        #     time_reset_2 = False
+        #     time_reset_1 = True
+        #     time_reset_3 = True
+        #     old_id_masive = [[], [], [], [], [], [], [], [], [], []]
 
-            old_id_masive = [[], [], [], [], []]
-
-        # Перевіряємо, чи поточний час дорівнює 17:00 або 8:00
-        if current_time.hour == 17 and time_reset_2:
-            time_reset_2 = False
-            time_reset_1 = True
-            time_reset_3 = True
-            old_id_masive = [[], [], [], [], []]
-
-        if current_time.hour == 0 and time_reset_3:
-            time_reset_3 = False
-            time.sleep(1800)
+        # if current_time.hour == 0 and time_reset_3:
+        #     time_reset_3 = False
+        #     time.sleep(1800)
 
         if current_time.hour >= 2 and current_time.hour <= 7:
+            old_id_masive = [[], [], [], [], [], [], [], [], [], []]
             continue
 
         for target_url, ads_ids in zip(target_urls, old_id_masive):
