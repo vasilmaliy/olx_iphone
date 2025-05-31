@@ -141,19 +141,21 @@ class Messenger():
             params_pavlo = {
                 "chat_id": "751066597",
                 "text": message_text
-                # "text": "пішов в дупу Павлик"
+                # "text": "https://life.pravda.com.ua/culture/2020/03/29/240391/"
             }
 
             params_maksim = {
-                "chat_id": "751066597",
-                 "text": "повитерай пилисос Павлик"
+                "chat_id": "822530549",
+                 "text": message_text
             }
 
             try:
                 response = requests.get(endpoint, params=params)
 
-                # send pavlo message
+                # send users message
                 requests.get(endpoint, params=params_pavlo)
+                requests.get(endpoint, params=params_maksim)
+
                 # requests.get(endpoint, params=params_pavlo2)
 
                 response.raise_for_status()
