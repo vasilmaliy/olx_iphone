@@ -92,6 +92,9 @@ def main() -> None:
     # добавити масив при добвавленні нової силки
     old_id_masive = [[], [], [], [], [], [], [], [], [], []]
 
+    # загальний масив всіх телефонів щоб не повтроювались в пару масивах пошуку
+    all_ids = []
+
     kiev_timezone = pytz.timezone('Europe/Kiev')
 
     time_reset_1 = True
@@ -125,6 +128,7 @@ def main() -> None:
 
         if current_time.hour >= 2 and current_time.hour <= 7:
             old_id_masive = [[], [], [], [], [], [], [], [], [], []]
+            all_ids = []
             continue
 
         for target_url, ads_ids in zip(target_urls, old_id_masive):
@@ -133,13 +137,17 @@ def main() -> None:
 
             try:
                 # Filter out the already processed ads
-                new_ads_urls, new_ids = get_new_ads_urls(ads_ids, target_url)
+                # new_ads_urls, new_ids = get_new_ads_urls(ads_ids, target_url)
+
+                #перевірка з загалним масивом
+                new_ads_urls, new_ids = get_new_ads_urls(all_ids, target_url)
                 # print(new_ads_urls)
             except Exception as e:
                 # Messenger.send_telegram_message('', 'Failed')
                 continue
 
             print(f"old {index} {ads_ids}")
+            print(f"all new links {all_ids}")
             print(f"new {index} {new_ads_urls}")
             # print(f"new {index} {new_ids}")
 
@@ -158,6 +166,7 @@ def main() -> None:
             # Add the processed ads to database
 
             old_id_masive[index].extend(new_ids)
+            all_ids.extend(new_ids)
             index = index + 1
             # time.sleep(10)
 
