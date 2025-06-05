@@ -163,8 +163,8 @@ def main() -> None:
                     # message_subject, message_body = Messenger.generate_email_content(
                     #     target_url, [ad])
                     #     Messenger.send_email_message(message_subject, message_body)
-                    message_body = ad + " \n\nimg:" + str(ad_img)
-                    Messenger.send_telegram_message('', message_body)
+                    message_body = ad
+                    Messenger.send_telegram_message('', message_body, ad_img)
 
             # Add the processed ads to database
 

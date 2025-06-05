@@ -96,7 +96,7 @@ class Messenger():
         logging.info("Email notification sent successfully")
 
     @staticmethod
-    def send_telegram_message(message_subject: str, message_body: str) -> None:
+    def send_telegram_message(message_subject: str, message_body: str, ad_img: str) -> None:
         """
         Send a message via Telegram. The service accepts messages up to
         4096 characters or less, so the notification will be divided into sections of
@@ -112,7 +112,7 @@ class Messenger():
         Raises:
             requests.exceptions.RequestException: In case an error is generated during the transmission.
         """
-        endpoint = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+        endpoint = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
         max_length = 4000
         message_batches = []
         current_message = ""
@@ -149,12 +149,36 @@ class Messenger():
                  "text": message_text
             }
 
-            try:
-                response = requests.get(endpoint, params=params)
+            params_2 = {
+                "chat_id": TELEGRAM_CHAT_ID,
+                "photo": ad_img,
+                "caption": message_text
+            }
 
-                # send users message
-                requests.get(endpoint, params=params_pavlo)
-                requests.get(endpoint, params=params_maksim)
+            # Користувачі
+            params_pavlo_2 = {
+                "chat_id": "751066597",
+                "photo": ad_img,
+                "caption": message_text
+                # "text": "https://life.pravda.com.ua/culture/2020/03/29/240391/"
+            }
+
+            params_maksim_2 = {
+                "chat_id": "822530549",
+                "photo": ad_img,
+                "caption": message_text
+            }
+
+            try:
+
+                if ad_img.startswith('http://') or ad_img.startswith('https://'):
+                    response = requests.get(endpoint, params=params_2)
+                    requests.get(endpoint, params=params_pavlo_2)
+                    requests.get(endpoint, params=params_maksim_2)
+                else:
+                    response = requests.get(endpoint, params=params)
+                    requests.get(endpoint, params=params_pavlo)
+                    requests.get(endpoint, params=params_maksim)
 
                 # requests.get(endpoint, params=params_pavlo2)
 
