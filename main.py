@@ -49,20 +49,23 @@ def get_new_ads_urls(all_ids: list, target_url: str) -> list:
     Returns:
         new_urls (list): List of URLs not found in the database.
     """
-    new_urls, new_ids, ads_img = get_new_ads_urls_for_url(target_url)
+    new_urls, new_ids, ads_img, ads_info = get_new_ads_urls_for_url(target_url)
 
     new_urls_list = []
     new_id_list = []
     new_img_list = []
+    new_ads_info = []
 
     if new_urls:
-        for id, url, img in zip(new_ids, new_urls, ads_img):
+        for id, url, img, info in zip(new_ids, new_urls, ads_img, ads_info):
             if not id in all_ids:
                 new_urls_list.append(url)
                 new_id_list.append(id)
                 new_img_list.append(img)
+                new_ads_info.append(info)
 
-    return new_urls_list, new_id_list, new_img_list
+
+    return new_urls_list, new_id_list, new_img_list, new_ads_info
 
 
 def get_new_ads_urls_for_url(target_url: str) -> list:
@@ -77,11 +80,13 @@ def get_new_ads_urls_for_url(target_url: str) -> list:
     """
 
     try:
-        ads_urls, new_ids, ads_img = scraper.scrape_ads_urls(target_url)
+        ads_urls, new_ids, ads_img, ads_info = scraper.scrape_ads_urls(target_url)
     except ValueError as error:
         logging.error(error)
         return []
-    return list(ads_urls), new_ids, ads_img
+    return list(ads_urls), new_ids, ads_img, ads_info
+
+
 
 
 def main() -> None:
@@ -142,7 +147,7 @@ def main() -> None:
                 # new_ads_urls, new_ids = get_new_ads_urls(ads_ids, target_url)
 
                 #перевірка з загалним масивом
-                new_ads_urls, new_ids, new_img = get_new_ads_urls(all_ids, target_url)
+                new_ads_urls, new_ids, new_img, new_info = get_new_ads_urls(all_ids, target_url)
                 # print(new_ads_urls)
             except Exception as e:
                 # Messenger.send_telegram_message('', 'Failed')
@@ -151,6 +156,7 @@ def main() -> None:
             print(f"old {index} {ads_ids}")
             print(f"all new links {all_ids}")
             print(f"new {index} {new_ads_urls}")
+            print(new_info)
             # print(f"new {index} {new_ids}")
 
             # Process ads in parallel, for increased speed
@@ -159,12 +165,12 @@ def main() -> None:
             # new_ads = list(filter(None, new_ads))
 
             if new_ads_urls:
-                for ad, ad_img in zip(new_ads_urls, new_img):
+                for ad, ad_img, ad_info in zip(new_ads_urls, new_img, new_info):
                     # message_subject, message_body = Messenger.generate_email_content(
                     #     target_url, [ad])
                     #     Messenger.send_email_message(message_subject, message_body)
-                    message_body = ad
-                    Messenger.send_telegram_message('', message_body, ad_img)
+                    message_body = ad + " \n\n" + ad_info
+                    Messenger.send_telegram_message('', message_body, ad_img )
 
             # Add the processed ads to database
 
