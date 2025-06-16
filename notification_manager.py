@@ -174,11 +174,11 @@ class Messenger():
                 if ad_img.startswith('http://') or ad_img.startswith('https://'):
                     response = requests.get(endpoint, params=params_2)
                     requests.get(endpoint, params=params_pavlo_2)
-                    requests.get(endpoint, params=params_maksim_2)
+                    # requests.get(endpoint, params=params_maksim_2)
                 else:
                     response = requests.get(endpoint, params=params)
                     requests.get(endpoint, params=params_pavlo)
-                    requests.get(endpoint, params=params_maksim)
+                    # requests.get(endpoint, params=params_maksim)
 
                 # requests.get(endpoint, params=params_pavlo2)
 
