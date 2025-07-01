@@ -6,13 +6,14 @@ import logging
 # from dotenv import load_dotenv
 from utils import normalize_text, extract_search_term
 import logging_config
-#
-# load_dotenv()
+from dotenv import load_dotenv
+
+load_dotenv()
 
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
 EMAIL_APP_PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
-TELEGRAM_BOT_TOKEN="7239140118:AAFIR0SuwzSWeEMIgArvKxAKcS-EkwkejUY"
+TELEGRAM_BOT_TOKEN= os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID="643930225"
 
 
